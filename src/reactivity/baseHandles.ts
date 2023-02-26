@@ -3,7 +3,7 @@ import { track, trigger } from './effect'
 import { reactive, ReactiveFlags, readonly } from './reactive'
 
 const get = createGetter()
-const set = createSetting()
+const set = createSetter()
 const readonlyGet = createGetter(true)
 const shallowReadonlyGet = createGetter(true, true)
 
@@ -17,6 +17,7 @@ function createGetter(isReadonly = false, shawlow = false) {
 
     const res = Reflect.get(target, key)
 
+    // 如果是shawlow，就直接返回结果，不需要再次代理内部的对象
     if (shawlow) {
       return res
     }
@@ -32,7 +33,7 @@ function createGetter(isReadonly = false, shawlow = false) {
   }
 }
 
-function createSetting() {
+function createSetter() {
   return function set(target, key, value) {
     const res = Reflect.set(target, key, value)
     trigger(target, key)

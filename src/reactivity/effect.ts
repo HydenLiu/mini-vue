@@ -4,10 +4,10 @@ let activeEffect
 let shouldTrack
 
 export class ReactiveEffect {
-  private _fn: any
-  deps = []
-  onStop: any
-  active = true
+  private _fn: any // 保存传入的函数
+  deps = [] // 依赖数组
+  onStop: any // stop函数的回调
+  active = true // 是否存在该依赖
   constructor(fn, public scheduler) {
     this._fn = fn
   }
@@ -48,7 +48,7 @@ const targetMap = new WeakMap()
 
 // 收集依赖
 export function track(target, key) {
-  if(!isTracking()) return
+  if (!isTracking()) return
   let depsMap = targetMap.get(target)
   if (!depsMap) {
     depsMap = new Map()
@@ -63,13 +63,13 @@ export function track(target, key) {
   trackEffects(dep)
 }
 
-export function trackEffects(dep){
-  if(dep.has(activeEffect)) return
+export function trackEffects(dep) {
+  if (dep.has(activeEffect)) return
   dep.add(activeEffect)
   activeEffect.deps.push(dep)
 }
 
-export function isTracking(){
+export function isTracking() {
   return shouldTrack && activeEffect !== undefined
 }
 
@@ -80,7 +80,7 @@ export function trigger(target, key) {
   triggerEffects(dep)
 }
 
-export function triggerEffects(dep){
+export function triggerEffects(dep) {
   dep.forEach((effect) => {
     if (effect.scheduler) {
       effect.scheduler()

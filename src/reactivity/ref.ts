@@ -3,10 +3,10 @@ import { isTracking, trackEffects, triggerEffects } from './effect'
 import { reactive } from './reactive'
 
 class RefImpl {
-  private _value: any
-  public dep
-  private _rawValue: any
-  public __v_isRef = true
+  private _value: any // 保存代理后的值
+  public dep // 依赖
+  private _rawValue: any // 保存原始值
+  public __v_isRef = true // 标识是否是ref
   constructor(value) {
     this._rawValue = value
     this._value = convert(value)
@@ -33,6 +33,7 @@ function trackRefValue(ref) {
   }
 }
 
+// 如果是对象，就使用reactive代理
 function convert(value) {
   return isObject(value) ? reactive(value) : value
 }
