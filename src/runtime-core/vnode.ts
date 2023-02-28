@@ -2,7 +2,8 @@
   const vnode = {
     type,
     props,
-    children
+    children,
+    el: null
   }
   return vnode
  }
