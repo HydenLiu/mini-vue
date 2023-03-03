@@ -49,7 +49,7 @@ export const mutableHandles = {
 export const readonlyHandles = {
   get: readonlyGet,
   set(target, key) {
-    console.warn(`readonly ${target}下的${key} 不可修改`)
+    console.warn(`readonly target 下的 ${key} 不可修改`)
     return true
   },
 }
