@@ -8,14 +8,22 @@ export const App = {
     return h('div', {
       id: 'root',
       onClick: () => {
-        console.log('click')
+        // console.log('click')
       }
     },
       // `hi ${this.msg}`
       [
         h('p', {}, 'hi'),
-        h(Foo, { count: 1 })
-      ] 
+        h(Foo, {
+          count: 1,
+          onAdd (a, b) {
+            console.log('onAdd', a, b)
+          },
+          onAddFoo(){
+            console.log('add foo')
+          }
+        })
+      ]
     )
   },
 
