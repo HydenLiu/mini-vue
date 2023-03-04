@@ -1,7 +1,8 @@
-import { hasOwn } from "../shared/index"
+import { hasOwn } from '../shared/index'
 
 const publicPropertiesMap = {
-  '$el': (i)=> i.vnode.el
+  $el: (i) => i.vnode.el,
+  $slots: (i) => i.slots,
 }
 
 // 这里一般处理挂载到template 或者是 h函数里面的
@@ -11,12 +12,12 @@ export const PublicInstanceProxyHandlers = {
     const { setupState, props } = instance
     if (hasOwn(setupState, key)) {
       return setupState[key]
-    } else if (hasOwn(props, key)){
+    } else if (hasOwn(props, key)) {
       return props[key]
     }
 
     const publicGetter = publicPropertiesMap[key]
-    if(publicGetter){
+    if (publicGetter) {
       return publicGetter(instance)
     }
   },
