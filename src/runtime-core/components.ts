@@ -11,7 +11,7 @@ export function createComponentInstance(vnode) {
     setupState: {},
     props: {},
     slots: {},
-    emit: ()=> {}
+    emit: () => {},
   }
 
   // bind(null, component) 使用了这个，后面用户就可以不用再传instance
@@ -38,11 +38,14 @@ function setupStatefulComponent(instance: any) {
   const { setup } = Component
 
   if (setup) {
+    setCurrentInstance(instance)
     // setup会返回function 或者 object
     // 这里调用setup方法
-    const setupResult = setup(shallowReadonly(instance.props),{
-      emit: instance.emit
+    const setupResult = setup(shallowReadonly(instance.props), {
+      emit: instance.emit,
     })
+    setCurrentInstance(null)
+
     handleSetupResult(instance, setupResult)
   }
 }
@@ -59,4 +62,13 @@ function finishComponentSetup(instance: any) {
 
   // setup返回函数的话这里调用render方法（h函数构成）
   instance.render = Component.render
+}
+
+let currentInstance = null
+export function getCurrentInstance() {
+  return currentInstance
+}
+
+function setCurrentInstance(value) {
+  currentInstance = value
 }
