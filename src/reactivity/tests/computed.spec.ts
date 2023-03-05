@@ -1,13 +1,14 @@
-import { computed } from "../computed"
-import { reactive } from "../reactive"
+import { computed } from '../computed'
+import { reactive } from '../reactive'
+import { vi } from 'vitest'
 
-describe('computed', ()=>{
-  it('happy', ()=>{
+describe('computed', () => {
+  it('happy', () => {
     const user = reactive({
-      age: 1
+      age: 1,
     })
 
-    const age = computed(()=>{
+    const age = computed(() => {
       return user.age
     })
 
@@ -16,9 +17,9 @@ describe('computed', ()=>{
 
   it('should compute lazily', () => {
     const value = reactive({
-      foo: 1
+      foo: 1,
     })
-    const getter = jest.fn(() => value.foo)
+    const getter = vi.fn(() => value.foo)
     const cValue = computed(getter)
 
     // lazy
