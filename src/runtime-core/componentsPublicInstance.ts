@@ -3,6 +3,7 @@ import { hasOwn } from '../shared/index'
 const publicPropertiesMap = {
   $el: (i) => i.vnode.el,
   $slots: (i) => i.slots,
+  $props: (i) => i.props,
 }
 
 // 这里一般处理挂载到template 或者是 h函数里面的
