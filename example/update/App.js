@@ -1,4 +1,5 @@
 import { h, ref } from '../../lib/guide-mini-vue.esm.js'
+import Test from './Test.js'
 
 export const App = {
   setup () {
@@ -49,7 +50,8 @@ export const App = {
             onClick: this.onChange
           },
           'change'
-        )
+        ),
+        h(Test)
       ]
     )
   }
