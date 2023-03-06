@@ -53,6 +53,7 @@ function isEnd(context, ancestors) {
   return !s
 }
 
+// 处理Text类型
 function parseText(context) {
   // 处理Text节点时，遇到'{{'停止截取
   let endIndex = context.source.length
@@ -73,6 +74,7 @@ function parseText(context) {
   }
 }
 
+// 处理element标签
 function parseElement(context: any, ancestors) {
   const element: any = parseTag(context, TagType.Start)
   ancestors.push(element)
@@ -110,6 +112,7 @@ function parseTag(context, type: TagType) {
   }
 }
 
+// 处理插值
 function parseInterpolation(context) {
   const openDelimiter = '{{'
   const closeDelimiter = '}}'
@@ -133,10 +136,12 @@ function parseInterpolation(context) {
   }
 }
 
+// 删除处理完成的代码
 function advanceBy(context: any, length: number) {
   context.source = context.source.slice(length)
 }
 
+// 截取文本
 function paseTextData(context: any, length) {
   // 1. 获取content
   const content = context.source.slice(0, length)
@@ -146,12 +151,15 @@ function paseTextData(context: any, length) {
   return content
 }
 
+// 创建根节点
 function createRoot(children) {
   return {
     children,
+    type: NodeTypes.ROOT,
   }
 }
 
+// 创建上下文
 function createParserContext(content: string): any {
   return {
     source: content,

@@ -350,7 +350,8 @@ export function createRenderer(options) {
     instance.update = effect(() => {
       if (!instance.isMounted) {
         const { proxy } = instance
-        const subTree = (instance.subTree = instance.render.call(proxy))
+        // 加上后面的proxy解决template的this问题
+        const subTree = (instance.subTree = instance.render.call(proxy, proxy))
 
         // vnode -> patch
         // vnode -> element -> moundElement
@@ -368,7 +369,8 @@ export function createRenderer(options) {
         }
 
         const { proxy } = instance
-        const subTree = instance.render.call(proxy)
+        // 加上后面的proxy解决template的this问题
+        const subTree = instance.render.call(proxy, proxy)
         const prevSubTree = instance.subTree
 
         // 记得更新instance里面的subTree

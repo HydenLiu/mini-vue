@@ -67,6 +67,13 @@ function handleSetupResult(instance: any, setupResult: any) {
 function finishComponentSetup(instance: any) {
   const Component = instance.type
 
+  // 调用编译器方法
+  if(compiler && !Component.render){
+    if(Component.template){
+      Component.render = compiler(Component.template)
+    }
+  }
+
   // setup返回函数的话这里调用render方法（h函数构成）
   instance.render = Component.render
 }
@@ -78,4 +85,10 @@ export function getCurrentInstance() {
 
 function setCurrentInstance(value) {
   currentInstance = value
+}
+
+// 编译时用到
+let compiler
+export function registerRuntimeCompiler(_compiler){
+  compiler = _compiler
 }
