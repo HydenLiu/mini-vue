@@ -80,6 +80,8 @@
 
   - generate 的实现
 
+## 各个包的依赖关系
+
 ```mermaid
   flowchart LR
     compiler-sfc["@vue/compiler-sfc"]
